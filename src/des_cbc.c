@@ -23,7 +23,7 @@ static void	encode_des_cbc(uint64_t k[])
 	len = ft_strlen(g_string);
 	new_string = NULL;
 	if (g_flags.d && len % 8)
-		write_exit(13);
+		write_exit(10);
 	else
 		new_string = ft_strnew((8 * len / 8) + (len % 8 ? 8 : 0) + 1);
 	vector = ft_atoull_base(g_init_vector, 16);
@@ -41,19 +41,19 @@ static void	encode_des_cbc(uint64_t k[])
 static void	parse_opts_des_cbc(char *str)
 {
 	if (g_flags.v && g_flags.k)
-		write_exit(14);
+		write_exit(11);
 	if (g_flags.v)
 	{
 		free(g_init_vector);
 		if (!(g_init_vector = ft_strdup(str)))
-			write_exit(11);
+			write_exit(5);
 		g_flags.v = 0;
 	}
 	else if (g_flags.k)
 	{
 		free(g_key_string);
 		if (!(g_key_string = ft_strdup(str)))
-			write_exit(11);
+			write_exit(5);
 		g_flags.k = 0;
 	}
 	else if (g_flags.o)
@@ -118,7 +118,7 @@ static void	parse_args_des_cbc(int ac, char **av)
 	if (!g_string)
 		get_input_from_stdin();
 	if (g_flags.badread)
-		write_exit(12);
+		write_exit(9);
 }
 
 void		ft_des_cbc(int ac, char **av)

@@ -17,20 +17,17 @@ void	write_exit(int n)
 	char *msg[15];
 
 	msg[0] = "usage: ft_ssl command [command opts] [command args]";
-	msg[1] = "ft_ssl: Error: WHATEVER is an invalid command";
-	msg[2] = "Invalid flag(s)";
-	msg[3] = "LOL FILL IT L8r";
-	msg[4] = "Too many arguments";
-	msg[5] = "No input";
-	msg[6] = "Can't encrypt [-e] (default) AND decrypt [-d]";
-	msg[7] = "-i/-o require arguments";
-	msg[8] = "Key verification error - bad password read";
-	msg[9] = "Only enter one key";
-	msg[10] = "Key is not in proper hex";
-	msg[11] = "Memory allocation failure";
-	msg[12] = "Unable to open file; No such file/directory";
-	msg[13] = "Data not multiple of block length (8)";
-	msg[14] = "Missing input for key or initial vector";
+	msg[1] = "error: invalid command";
+	msg[2] = "error: invalid flag(s)";
+	msg[3] = "error: no input";
+	msg[4] = "error: key is not in proper hex";
+	msg[5] = "error: memory allocation failure";
+	msg[6] = "error: can't encrypt [-e] (default) AND decrypt [-d]";
+	msg[7] = "error: -i/-o require arguments";
+	msg[8] = "error: key verification error - bad password read";
+	msg[9] = "error: unable to open file; No such file/directory";
+	msg[10] = "error: data not multiple of block length (8)";
+	msg[11] = "error: missing input for key or initial vector";
 	ft_putendl(msg[n]);
 	exit(EXIT_FAILURE);
 }

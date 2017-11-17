@@ -18,41 +18,7 @@ char	*g_key_string = NULL;
 char	*g_init_vector = NULL;
 t_flags	g_flags;
 
-int		validate_hex(char *s, int len)
-{
-	while (len--)
-		if (!ft_ishex(s[len]))
-			return (0);
-	return (1);
-}
-
-char	*string_64bits(char *str)
-{
-	int		len;
-	char	*tmp;
-
-	len = ft_strlen(str);
-	if (!validate_hex(str, len))
-		write_exit(10);
-	while (len < 16)
-	{
-		tmp = ft_strdup(str);
-		if (!(str = ft_strjoin(tmp, tmp)))
-			write_exit(11);
-		free(tmp);
-		len *= 2;
-	}
-	if (len > 16)
-	{
-		if (!(tmp = ft_strsub(str, 0, 16)))
-			write_exit(11);
-		str = tmp;
-		free(tmp);
-	}
-	return (str);
-}
-
-int		parse_command(char *cmd)
+static int	parse_command(char *cmd)
 {
 	int	i;
 
@@ -64,7 +30,7 @@ int		parse_command(char *cmd)
 	return (-42);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	int	cmd_index;
 

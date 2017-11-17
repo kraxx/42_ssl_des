@@ -28,7 +28,7 @@ void	get_input_from_stdin(void)
 		free(tmp);
 	}
 	if (!g_string)
-		write_exit(5);
+		write_exit(3);
 }
 
 void	get_vector_from_stdin(void)
@@ -53,14 +53,14 @@ void	get_vector_from_stdin(void)
 		}
 	}
 	if (!g_init_vector)
-		write_exit(5);
+		write_exit(3);
 }
 
 void	get_key_from_stdin(void)
 {
 	g_key_string = ft_strdup(getpass("Enter des key in hex "));
 	if (!ft_strcmp(g_key_string, ""))
-		write_exit(10);
+		write_exit(4);
 	if (ft_strcmp(g_key_string, getpass("Verifying - enter des key in hex: ")))
 		write_exit(8);
 }

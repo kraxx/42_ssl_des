@@ -66,7 +66,7 @@ static void	parse_args_base64(int ac, char **av)
 	if (g_flags.i || g_flags.o)
 		write_exit(7);
 	if (g_flags.badread && !ft_strlen(g_string))
-		write_exit(12);
+		write_exit(9);
 	if (!g_string)
 		get_input_from_stdin();
 }

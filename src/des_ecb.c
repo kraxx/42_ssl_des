@@ -22,7 +22,7 @@ static void	encode_des_ecb(uint64_t k[])
 	len = ft_strlen(g_string);
 	new_string = NULL;
 	if (g_flags.d && len % 8)
-		write_exit(13);
+		write_exit(10);
 	else
 		new_string = ft_strnew((8 * len / 8) + (len % 8 ? 8 : 0) + 1);
 	des_ecb_encrypt_64bits(k, new_string, len);
@@ -42,7 +42,7 @@ static void	parse_opts_des_ecb(char *str)
 		if (g_key_string)
 			free(g_key_string);
 		if (!(g_key_string = ft_strdup(str)))
-			write_exit(11);
+			write_exit(5);
 		g_flags.k = 0;
 	}
 	else if (g_flags.o)
@@ -104,7 +104,7 @@ static void	parse_args_des_ecb(int ac, char **av)
 	if (!g_string)
 		get_input_from_stdin();
 	if (g_flags.badread)
-		write_exit(12);
+		write_exit(9);
 }
 
 void		ft_des_ecb(int ac, char **av)
