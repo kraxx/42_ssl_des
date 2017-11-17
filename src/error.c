@@ -14,7 +14,7 @@
 
 void	write_exit(int n)
 {
-	char *msg[15];
+	char *msg[12];
 
 	msg[0] = "usage: ft_ssl command [command opts] [command args]";
 	msg[1] = "error: invalid command";
