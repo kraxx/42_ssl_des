@@ -13,17 +13,20 @@
 NAME = 		ft_ssl
 
 SRC = 		main \
-			error \
+			util \
+			write \
 			endians \
 			permutations \
 			generate_keys \
 			check_stdin \
-			util \
 			base64 \
 			base64_encode \
 			des_ecb \
+			des_util \
 			des_encode \
 			des_cbc \
+			des_cbc_util \
+			des3_cbc
 
 HDR =		ft_ssl_des \
 			ft_des_num
@@ -44,7 +47,7 @@ HDR_DIR =	-I includes -I libft/includes
 HDR_FILES =	includes/ft_ssl_des.h includes/ft_des_num.h
 # HDR_FILES = includes/$(addsuffix .h, $(HDR))
 
-C_FLAGS =	-Wall -Wextra -Werror
+C_FLAGS =	-Wall -Wextra -Werror -O3
 
 RED =				[31m
 GREEN =				[32m

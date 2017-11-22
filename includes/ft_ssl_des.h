@@ -18,9 +18,12 @@
 # include <pwd.h>
 # include <errno.h>
 
-# define CMD_COUNT	4
-# define CMD_CIPHER "base64", "des", "des-ecb", "des-cbc"
-# define FP_CIPHER &ft_base64, &ft_des_ecb, &ft_des_ecb, &ft_des_cbc
+# define CMD_COUNT	6
+# define CMD_CIPHER "base64", "des", "des-ecb", "des-cbc", "des3", "des3-cbc"
+
+# define FP_CIPHER_PT1 &ft_base64, &ft_des_ecb, &ft_des_ecb, &ft_des_cbc,
+# define FP_CIPHER_PT2 &ft_des3_cbc, &ft_des3_cbc
+# define FP_CIPHER FP_CIPHER_PT1 FP_CIPHER_PT2
 
 # define MASK_6BITS 63
 # define MASK_32 	0x80000000
@@ -35,6 +38,8 @@ typedef struct	s_flags
 	uint8_t	a:1;
 	uint8_t	k:1;
 	uint8_t	v:1;
+	uint8_t	p:1;
+	uint8_t	nopad:1;
 	uint8_t	badread:1;
 }				t_flags;
 
@@ -51,23 +56,42 @@ typedef union	u_64bits
 	uint8_t		c[8];
 }				t_64bits;
 
-void			ft_base64(int ac, char **av);
-void			ft_des_ecb(int ac, char **av);
-void			ft_des_cbc(int ac, char **av);
+typedef struct	s_data
+{
+	size_t	len;
+	int		output_fd;
+	char	*input;
+	char	*key_string;
+	char	*init_vector;
+	t_flags	flags;
+}				t_data;
 
-void			set_g_string(char *str);
-void			process_keys(uint64_t k[]);
+void			ft_base64(int ac, char **av, t_data *data);
+void			ft_des_ecb(int ac, char **av, t_data *data);
+void			ft_des_cbc(int ac, char **av, t_data *data);
+void			ft_des3_cbc(int ac, char **av, t_data *data);
 
-char			*en_base64(char *input, int len);
-char			*de_base64(char *input);
+void			parse_opts_des_cbc(char *str, t_data *data);
+void			parse_args_des_cbc(int ac, char **av, t_data *data);
 
-void			generate_subkeys_en(uint32_t c[], uint32_t d[]);
-void			generate_subkeys_de(uint32_t c[], uint32_t d[]);
-void			generate_16keys(uint32_t c[], uint32_t d[], uint64_t k[]);
+void			read_input_from_file(char *str, t_data *data);
+void			generate_keys(uint64_t k[16], t_data *data);
+void			generate_des3_keys(uint64_t k[3][16], t_data *data);
 
-void			des_ecb_encrypt_64bits(uint64_t k[], char *new_string, int len);
-void			des_cbc_encrypt_64bits(uint64_t k[], uint64_t vector,
-									char *new_string, int len);
+char			*en_base64(char *input, size_t len, t_data *data);
+char			*de_base64(char *input, size_t len, t_data *data);
+
+void			des_de_base64(t_data *data);
+char			*des_en_base64(char *input, t_data *data);
+
+void			des_cbc_xor_vector_en(uint64_t *buf, uint64_t *buf_prev,
+				uint64_t *vector, t_data *data);
+void			des_cbc_xor_vector_de(uint64_t *buf, uint64_t *buf_prev,
+				uint64_t *vector, t_data *data);
+
+void			des_remove_padding(char *output, t_data *data);
+uint64_t		des_block_permutations(uint64_t k[], uint64_t buf);
+uint64_t		des_string_to_buffer(size_t len, int i, t_data *data);
 
 uint32_t		permutate_sbox(uint64_t e_block);
 uint64_t		permutate_e(uint64_t r_block);
@@ -78,24 +102,20 @@ void			write_exit(int n);
 void			check_stdin(int opt);
 void			endian_switch32(uint32_t *n);
 void			endian_switch64(uint64_t *n);
-char			*string_64bits(char *str);
+char			*string_truncate(char *str, int bytes);
+char			*allocate_output_and_proc_de_base64(t_data *data);
+void			write_output(char *output, t_data *data);
 
-void			get_input_from_stdin(void);
-void			get_key_from_stdin(void);
-void			get_vector_from_stdin(void);
+void			get_input_from_stdin(t_data *data);
+void			get_key_from_stdin(t_data *data);
+void			get_vector_from_stdin(t_data *data);
 
 static char		*g_commands[] = {
 	CMD_CIPHER
 };
 
-static void		(*g_cmd_fp[CMD_COUNT])(int, char**) = {
+static void		(*g_cmd_fp[CMD_COUNT])(int, char**, t_data*) = {
 	FP_CIPHER
 };
-
-extern int		g_output_fd;
-extern char		*g_string;
-extern char		*g_key_string;
-extern char		*g_init_vector;
-extern t_flags	g_flags;
 
 #endif

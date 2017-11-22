@@ -12,46 +12,44 @@
 
 #include "ft_ssl_des.h"
 
-static void	parse_opts_base64(char *str)
+static void	parse_opts_base64(char *str, t_data *data)
 {
-	if (g_flags.o)
+	if (data->flags.o)
 	{
-		close(g_output_fd);
-		g_output_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		g_flags.o = 0;
+		if (data->output_fd != 1)
+			close(data->output_fd);
+		data->output_fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		data->flags.o = 0;
 	}
-	else if (g_flags.i || !g_string)
-		set_g_string(str);
+	else if (data->flags.i || !data->input)
+		read_input_from_file(str, data);
 }
 
-static void	parse_flags_base64(char *str)
+static void	parse_flags_base64(char *str, t_data *data)
 {
 	if (!(*(str + 1)))
 		write_exit(2);
 	while (*(++str))
 	{
 		if (*str == 'e')
-			g_flags.e = 1;
+			data->flags.e = 1;
 		else if (*str == 'd' || *str == 'D')
-			g_flags.d = 1;
+			data->flags.d = 1;
 		else if (*str == 'i')
 		{
-			g_flags.i = 1;
-			g_flags.o = 0;
+			data->flags.i = 1;
+			data->flags.o = 0;
 		}
-		else if (*str == 'o')
-		{
-			if (!g_flags.i)
-				g_flags.o = 1;
-		}
+		else if (*str == 'o' && !data->flags.i)
+			data->flags.o = 1;
 		else
 			write_exit(2);
-		if (g_flags.e && g_flags.d)
+		if (data->flags.e && data->flags.d)
 			write_exit(6);
 	}
 }
 
-static void	parse_args_base64(int ac, char **av)
+static void	parse_args_base64(int ac, char **av, t_data *data)
 {
 	int i;
 
@@ -59,29 +57,29 @@ static void	parse_args_base64(int ac, char **av)
 	while (++i < ac)
 	{
 		if (*av[i] == '-')
-			parse_flags_base64(av[i]);
+			parse_flags_base64(av[i], data);
 		else
-			parse_opts_base64(av[i]);
+			parse_opts_base64(av[i], data);
 	}
-	if (g_flags.i || g_flags.o)
+	if (data->flags.i || data->flags.o)
 		write_exit(7);
-	if (g_flags.badread && !ft_strlen(g_string))
+	if (data->flags.badread && !ft_strlen(data->input))
 		write_exit(9);
-	if (!g_string)
-		get_input_from_stdin();
+	if (!data->input)
+		get_input_from_stdin(data);
 }
 
-void		ft_base64(int ac, char **av)
+void		ft_base64(int ac, char **av, t_data *data)
 {
 	char	*output;
 
-	parse_args_base64(ac, av);
-	if (g_flags.d)
-		output = de_base64(g_string);
+	parse_args_base64(ac, av, data);
+	if (data->flags.d)
+		output = de_base64(data->input, data->len, data);
 	else
-		output = en_base64(g_string, ft_strlen(g_string));
-	ft_putstr_fd(output, g_output_fd);
+		output = en_base64(data->input, data->len, data);
+	write(data->output_fd, output, data->len);
 	free(output);
-	if (g_output_fd != 1)
-		close(g_output_fd);
+	if (data->output_fd != 1)
+		close(data->output_fd);
 }

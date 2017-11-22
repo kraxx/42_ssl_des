@@ -6,52 +6,35 @@
 /*   By: jchow <jchow@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 23:04:13 by jchow             #+#    #+#             */
-/*   Updated: 2017/11/17 00:26:16 by jchow            ###   ########.fr       */
+/*   Updated: 2017/11/18 22:28:20 by jchow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_des.h"
 
-void	set_g_string(char *str)
+void	read_input_from_file(char *str, t_data *data)
 {
 	int		fd;
 	int		ret;
 	char	*tmp;
 	char	buf[BUFF_SIZE + 1];
 
-	if (g_string)
-		free(g_string);
-	if (!(g_string = ft_strnew(0)))
+	free(data->input);
+	if (!(data->input = ft_strnew(0)))
 		write_exit(5);
 	fd = open(str, O_RDONLY);
 	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[ret] = 0;
-		tmp = g_string;
-		g_string = ft_strjoin(tmp, buf);
-		free(tmp);
+		tmp = ft_strnjoin(data->input, buf, data->len, ret);
+		free(data->input);
+		data->input = tmp;
+		data->len += ret;
 	}
 	if (ret < 0)
-		g_flags.badread = 1;
+		data->flags.badread = 1;
 	close(fd);
-	g_flags.i = 0;
-}
-
-void	process_keys(uint64_t k[])
-{
-	uint32_t c[17];
-	uint32_t d[17];
-	uint64_t key;
-
-	key = ft_atoull_base(g_key_string, 16);
-	key = permutate(key, g_pc1, 56, MASK_64);
-	c[0] = key >> 32 & 0xFFFFFFF0;
-	d[0] = key >> 4 & 0xFFFFFFF0;
-	if (g_flags.d)
-		generate_subkeys_de(c, d);
-	else
-		generate_subkeys_en(c, d);
-	generate_16keys(c, d, k);
+	data->flags.i = 0;
 }
 
 int		validate_hex(char *s, int len)
@@ -62,28 +45,36 @@ int		validate_hex(char *s, int len)
 	return (1);
 }
 
-char	*string_64bits(char *str)
+char	*string_truncate(char *str, int bytes)
 {
 	int		len;
-	char	*tmp;
+	char	*ret;
 
 	len = ft_strlen(str);
 	if (!validate_hex(str, len))
 		write_exit(4);
-	while (len < 16)
+	if (!(ret = ft_strnew(bytes)))
+		write_exit(5);
+	if (len < bytes)
 	{
-		tmp = ft_strdup(str);
-		if (!(str = ft_strjoin(tmp, tmp)))
-			write_exit(5);
-		free(tmp);
-		len *= 2;
+		ft_strncpy(ret, str, len);
+		ft_memset(ret + len, '0', bytes - len);
 	}
-	if (len > 16)
-	{
-		if (!(tmp = ft_strsub(str, 0, 16)))
-			write_exit(5);
-		str = tmp;
-		free(tmp);
-	}
-	return (str);
+	else
+		ft_strcpy(ret, str);
+	free(str);
+	return (ret);
+}
+
+char	*allocate_output_and_proc_de_base64(t_data *data)
+{
+	char	*ret;
+
+	if (data->flags.a && data->flags.d)
+		des_de_base64(data);
+	if (data->flags.nopad)
+		ret = ft_strnew(data->len + (data->len % 8 ? 8 - (data->len % 8) : 0));
+	else
+		ret = ft_strnew(data->len + (data->len % 8 ? 8 - (data->len % 8) : 8));
+	return (ret);
 }

@@ -6,19 +6,19 @@
 /*   By: jchow <jchow@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 23:11:48 by jchow             #+#    #+#             */
-/*   Updated: 2017/11/17 00:23:58 by jchow            ###   ########.fr       */
+/*   Updated: 2017/11/18 22:39:22 by jchow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_des.h"
 
-static uint64_t	encode_des_block(uint64_t k[], uint64_t buf)
+uint64_t	des_block_permutations(uint64_t k[16], uint64_t buf)
 {
 	t_64bits	ret;
 	t_64bits	rl;
 	t_64bits	right;
 	uint32_t	left;
-	int			i;
+	short		i;
 
 	ret.ll = permutate(buf, g_ip, 64, MASK_64);
 	left = ret.i[1];
@@ -39,60 +39,69 @@ static uint64_t	encode_des_block(uint64_t k[], uint64_t buf)
 	return (ret.ll);
 }
 
-static void		string_to_buffer(uint64_t *buf, int len, int i)
+void		des_de_base64(t_data *data)
 {
-	if (i + 8 < len)
-		ft_memcpy(buf, g_string + i, 8);
-	else
+	char	*ret;
+	char	*buf;
+	int		i;
+	int		len;
+	int		remainder;
+
+	len = data->len;
+	ret = ft_strnew(((data->len / 4) * 3) + ((data->len % 4) ? 3 : 0));
+	i = -1;
+	while (++i < len / 65)
 	{
-		ft_bzero(buf + 8 - (len - i), 8 - (len - i));
-		ft_memcpy(buf, g_string + i, len - i);
+		buf = de_base64(data->input + (i * 65), 65, data);
+		ft_memcpy(ret + (i * 48), buf, 48);
+		free(buf);
 	}
+	remainder = len % 65;
+	if (remainder)
+	{
+		buf = de_base64(data->input + (i * 65), remainder, data);
+		ft_memcpy(ret + (i * 48), buf, ((remainder / 4) * 3) +
+				((remainder % 4) ? 3 : 0));
+		free(buf);
+	}
+	free(data->input);
+	data->input = ret;
 }
 
-void			des_cbc_encrypt_64bits(uint64_t k[], uint64_t vector,
-										char *new_string, int len)
+static void	des_en_base64_remainder(char *input, char **ret,
+									size_t len, t_data *data)
 {
-	uint64_t	buf_prev;
-	uint64_t	buf;
-	int			i;
+	char	*tmp;
+	char	*buf;
 
-	i = 0;
-	while (i < len)
-	{
-		string_to_buffer(&buf, len, i);
-		if (g_flags.d)
-			buf_prev = buf;
-		else
-			buf ^= vector;
-		endian_switch64(&buf);
-		buf = encode_des_block(k, buf);
-		endian_switch64(&buf);
-		if (g_flags.d)
-		{
-			buf ^= vector;
-			vector = buf_prev;
-		}
-		else
-			vector = buf;
-		ft_memcpy(new_string + i, &buf, 8);
-		i += 8;
-	}
+	buf = en_base64(input, len, data);
+	tmp = ft_strjoin(*ret, buf);
+	free(ret);
+	free(buf);
+	*ret = tmp;
 }
 
-void			des_ecb_encrypt_64bits(uint64_t k[], char *new_string, int len)
+char		*des_en_base64(char *input, t_data *data)
 {
-	uint64_t	buf;
-	int			i;
+	char	*ret;
+	char	*buf;
+	char	*tmp;
+	size_t	i;
+	size_t	len;
 
+	len = data->len;
+	ret = ft_strnew(0);
 	i = 0;
-	while (i < len)
+	while (i < len / 48)
 	{
-		string_to_buffer(&buf, len, i);
-		endian_switch64(&buf);
-		buf = encode_des_block(k, buf);
-		endian_switch64(&buf);
-		ft_memcpy(new_string + i, &buf, 8);
-		i += 8;
+		buf = en_base64(input + (i * 48), 48, data);
+		tmp = ft_strjoin(ret, buf);
+		free(ret);
+		free(buf);
+		ret = tmp;
+		++i;
 	}
+	if (len % 48)
+		des_en_base64_remainder(input + (i * 48), &ret, len % 48, data);
+	return (ret);
 }
