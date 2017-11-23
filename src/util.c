@@ -6,7 +6,7 @@
 /*   By: jchow <jchow@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 23:04:13 by jchow             #+#    #+#             */
-/*   Updated: 2017/11/18 22:28:20 by jchow            ###   ########.fr       */
+/*   Updated: 2017/11/22 18:40:47 by jchow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*string_truncate(char *str, int bytes)
 		ft_memset(ret + len, '0', bytes - len);
 	}
 	else
-		ft_strcpy(ret, str);
+		ft_strncpy(ret, str, bytes);
 	free(str);
 	return (ret);
 }

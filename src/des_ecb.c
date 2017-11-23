@@ -6,7 +6,7 @@
 /*   By: jchow <jchow@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 22:59:57 by jchow             #+#    #+#             */
-/*   Updated: 2017/11/17 00:23:41 by jchow            ###   ########.fr       */
+/*   Updated: 2017/11/22 18:39:55 by jchow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	parse_opts_des_ecb(char *str, t_data *data)
 		free(data->key_string);
 		if (!(data->key_string = ft_strdup(str)))
 			write_exit(5);
+		if (ft_strlen(data->key_string) > 64)
+			write_exit(12);
 		data->flags.k = 0;
 	}
 	else if (data->flags.o)

@@ -6,7 +6,7 @@
 /*   By: jchow <jchow@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 23:16:16 by jchow             #+#    #+#             */
-/*   Updated: 2017/11/18 22:00:28 by jchow            ###   ########.fr       */
+/*   Updated: 2017/11/22 18:40:52 by jchow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	write_usage(void)
 
 void		write_exit(int n)
 {
-	char *msg[12];
+	char *msg[13];
 
 	msg[1] = "error: invalid command";
 	msg[2] = "error: invalid flag(s)";
@@ -44,6 +44,7 @@ void		write_exit(int n)
 	msg[9] = "error: unable to open file; No such file/directory";
 	msg[10] = "error: data not multiple of block length (8)";
 	msg[11] = "error: missing input for key or initial vector";
+	msg[12] = "error: hex string is too long";
 	if (n)
 		ft_putendl(msg[n]);
 	write_usage();

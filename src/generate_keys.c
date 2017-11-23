@@ -6,7 +6,7 @@
 /*   By: jchow <jchow@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 18:43:52 by jchow             #+#    #+#             */
-/*   Updated: 2017/11/17 00:25:52 by jchow            ###   ########.fr       */
+/*   Updated: 2017/11/22 18:40:23 by jchow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,15 @@ void		generate_des3_keys(uint64_t k[3][16], t_data *data)
 		c[0] = key >> 32 & 0xFFFFFFF0;
 		d[0] = key >> 4 & 0xFFFFFFF0;
 		if (data->flags.d)
+		{
 			generate_subkeys_de(c, d);
+			generate_16keys(c, d, k[2 - i]);
+		}
 		else
+		{
 			generate_subkeys_en(c, d);
-		generate_16keys(c, d, k[i]);
+			generate_16keys(c, d, k[i]);
+		}
 		data->flags.d = data->flags.d ? 0 : 1;
 	}
 	data->flags.d = data->flags.d ? 0 : 1;

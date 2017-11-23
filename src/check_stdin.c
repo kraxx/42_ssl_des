@@ -6,7 +6,7 @@
 /*   By: jchow <jchow@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 18:29:05 by jchow             #+#    #+#             */
-/*   Updated: 2017/11/17 00:23:14 by jchow            ###   ########.fr       */
+/*   Updated: 2017/11/22 18:39:08 by jchow            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,6 @@ void	get_key_from_stdin(t_data *data)
 	if (ft_strcmp(data->key_string,
 			getpass("Verifying - enter des key in hex: ")))
 		write_exit(8);
+	if (ft_strlen(data->key_string) > 64)
+		write_exit(12);
 }
