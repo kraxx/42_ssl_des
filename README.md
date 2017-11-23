@@ -1,5 +1,6 @@
 # 42_ssl_des
 Recreation of OpenSSL's implementation of DES (Data Encryption Standard).
+Coded as part of 42 University's encryption branch.
 ## Getting started
 From the root directory, run:
 ```
