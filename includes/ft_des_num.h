@@ -13,6 +13,17 @@
 #ifndef FT_DES_NUM_H
 # define FT_DES_NUM_H
 
+/*
+** Base 64 Array
+*/
+
+static const char		g_base64[] =
+"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+/*
+** S-Box Tables
+*/
+
 static unsigned char	g_des_sbox_1[64] = {
 	14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7,
 	0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8,
@@ -79,6 +90,10 @@ static unsigned char	g_subkey_shifts[] = {
 	1, 2, 2, 2, 2, 2, 2, 1
 };
 
+/*
+** Permutation Tables
+*/
+
 static unsigned char	g_ip[] = {
 	58, 50, 42, 34, 26, 18, 10, 2,
 	60, 52, 44, 36, 28, 20, 12, 4,
@@ -133,8 +148,5 @@ static unsigned char	g_pc2[] = {
 	44, 49, 39, 56, 34, 53,
 	46, 42, 50, 36, 29, 32
 };
-
-static const char		g_base64[] =
-"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 #endif

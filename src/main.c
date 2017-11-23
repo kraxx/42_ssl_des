@@ -12,6 +12,18 @@
 
 #include "ft_ssl_des.h"
 
+/*
+** This is my implementation of standard Base64 & OpenSSL's DES encryption/
+** decryption algorithms.
+**
+** Commands currently handled are:
+**
+** base64
+** des-ecb
+** des-cbc
+** triple des-cbc
+*/
+
 static int	parse_command(char *cmd)
 {
 	short	i;

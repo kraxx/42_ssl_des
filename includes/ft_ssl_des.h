@@ -29,6 +29,17 @@
 # define MASK_32 	0x80000000
 # define MASK_64 	0x8000000000000000
 
+# define REDTXT		"[31m"
+# define GRNTXT		"[32m"
+# define MAGTXT		"[35m"
+# define CYANTXT	"[36m"
+# define ENDTXT		"[0m"
+
+/*
+** "nopad" flag does not emulate openssl's.
+** Blocks are still padded to blocksize, with null terminating zeroes.
+*/
+
 typedef struct	s_flags
 {
 	uint8_t	e:1;
@@ -74,13 +85,11 @@ void			ft_des3_cbc(int ac, char **av, t_data *data);
 void			parse_opts_des_cbc(char *str, t_data *data);
 void			parse_args_des_cbc(int ac, char **av, t_data *data);
 
-void			read_input_from_file(char *str, t_data *data);
 void			generate_keys(uint64_t k[16], t_data *data);
 void			generate_des3_keys(uint64_t k[3][16], t_data *data);
 
 char			*en_base64(char *input, size_t len, t_data *data);
 char			*de_base64(char *input, size_t len, t_data *data);
-
 void			des_de_base64(t_data *data);
 char			*des_en_base64(char *input, t_data *data);
 
@@ -99,16 +108,16 @@ uint64_t		permutate(uint64_t block, const t_uc table[],
 						int size, uint64_t mask);
 
 void			write_exit(int n);
-void			check_stdin(int opt);
 void			endian_switch32(uint32_t *n);
 void			endian_switch64(uint64_t *n);
 char			*string_truncate(char *str, int bytes);
 char			*allocate_output_and_proc_de_base64(t_data *data);
-void			write_output(char *output, t_data *data);
 
+void			read_input_from_file(char *str, t_data *data);
 void			get_input_from_stdin(t_data *data);
 void			get_key_from_stdin(t_data *data);
 void			get_vector_from_stdin(t_data *data);
+void			write_output(char *output, t_data *data);
 
 static char		*g_commands[] = {
 	CMD_CIPHER

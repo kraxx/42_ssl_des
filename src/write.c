@@ -17,18 +17,22 @@ static void	write_usage(void)
 	int	i;
 
 	i = 0;
-	write(1, "\nStandard commands:\n", 20);
-	write(1, "\nMessage Digest commands:\n", 26);
-	write(1, "\nCipher commands:\n", 18);
+	ft_putendl("usage: ./ft_ssl "CYANTXT"[command] "GRNTXT"[opts] "
+		MAGTXT"[args]\n"CYANTXT"\nStandard commands:\n\n"
+		"Message Digest commands:\n\nCipher commands:"ENDTXT);
 	while (i < CMD_COUNT)
 		ft_putendl(g_commands[i++]);
+	ft_putendl(GRNTXT"\nOpts:"ENDTXT"\n\n-e		encode\n-d/-D		decode"
+		"\n-i		input "MAGTXT"[file]"ENDTXT"\n-o		output "MAGTXT
+		"[file]"ENDTXT"\n-a		base64 mode (for des)\n-k/-K		key "
+		MAGTXT"[hex string]"ENDTXT"\n-v		initial vector "MAGTXT
+		"[hex string]"ENDTXT"\n-p		print key\n-n		nopad\n");
 }
 
 void		write_exit(int n)
 {
 	char *msg[12];
 
-	msg[0] = "usage: ft_ssl command [command opts] [command args]";
 	msg[1] = "error: invalid command";
 	msg[2] = "error: invalid flag(s)";
 	msg[3] = "error: no input";
@@ -40,7 +44,8 @@ void		write_exit(int n)
 	msg[9] = "error: unable to open file; No such file/directory";
 	msg[10] = "error: data not multiple of block length (8)";
 	msg[11] = "error: missing input for key or initial vector";
-	ft_putendl(msg[n]);
+	if (n)
+		ft_putendl(msg[n]);
 	write_usage();
 	exit(EXIT_FAILURE);
 }
