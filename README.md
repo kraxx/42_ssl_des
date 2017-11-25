@@ -35,7 +35,7 @@ Likewise, if no output file is specified, the program writes to standard output.
 ## Using the testing suite
 Run the included script "differ.sh" to test the output of ft_ssl against openssl's.
 ```
-./scripts/differ.sh [plain/cipher text] [key (optional)] [initialization vector (optional)]
+./scripts/des_differ.sh [plain/cipher text] [key (optional)] [initialization vector (optional)]
 ```
 The results of each command's encryption/decryption are compared with base64/OpenSSL's results using the command line's "diff". On failure, the difference in outputs are displayed. Otherwise, all is good!
 Additional in/out piping tests are performed to ensure reads from standard input are clean.
