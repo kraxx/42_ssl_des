@@ -34,6 +34,10 @@ typedef struct				s_list
 	struct s_list			*next;
 }							t_list;
 
+/*
+** 42_libft pt. 1: libc functions
+*/
+
 void						*ft_memset(void *s, int c, size_t n);
 void						ft_bzero(void *s, size_t n);
 void						*ft_memcpy(void *dest, const void *src, size_t n);
@@ -68,6 +72,10 @@ int							ft_isprint(int c);
 int							ft_toupper(int c);
 int							ft_tolower(int c);
 
+/*
+** 42_libft pt. 2: additional functions
+*/
+
 void						*ft_memalloc(size_t size);
 void						ft_memdel(void **ap);
 char						*ft_strnew(size_t size);
@@ -96,6 +104,10 @@ void						ft_putstr_fd(char const *s, int fd);
 void						ft_putendl_fd(char const *s, int fd);
 void						ft_putnbr_fd(int n, int fd);
 
+/*
+** 42_libft pt. 3: bonus functions
+*/
+
 t_list						*ft_lstnew(void const *content,
 							size_t content_size);
 void						ft_lstdelone(t_list **alst,
@@ -108,7 +120,15 @@ void						ft_lstiter(t_list *lst,
 t_list						*ft_lstmap(t_list *lst,
 							t_list *(*f)(t_list *elem));
 
+/*
+** ft_get_next_line (a 42 project of its own)
+*/
+
 int							ft_get_next_line(const int fd, char **line);
+
+/*
+** additional functions written for use in other 42 projects
+*/
 
 int							ft_isupper(int c);
 int							ft_islower(int c);

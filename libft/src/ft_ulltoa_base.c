@@ -10,6 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** Converts an unsigned long long into a number string.
+*/
+
 #include "libft.h"
 
 static int	find_size(t_ull n, int base)

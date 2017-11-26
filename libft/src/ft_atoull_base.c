@@ -10,6 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** Converts number string to unsigned long long
+*/
+
 #include "libft.h"
 
 t_ull	ft_atoull_base(const char *str, int base)

@@ -31,23 +31,25 @@ SRC = 		main \
 HDR =		ft_ssl_des \
 			ft_des_num
 
-SRC_DIR = 	src/
-SRC_FILES =	$(addsuffix .c, $(SRC))
-SRCS =		$(addprefix $(SRC_DIR), $(SRC_FILES))
+SRC_DIR =		src/
+SRC_C =			$(addsuffix .c, $(SRC))
+SRC_FILES =		$(addprefix $(SRC_DIR), $(SRC_C))
 
-OBJ_DIR =	obj/
-OBJ_FILES =	$(addsuffix .o, $(SRC))
-OBJS =		$(addprefix $(OBJ_DIR), $(OBJ_FILES))
+OBJ_DIR =		obj/
+OBJ_O =			$(addsuffix .o, $(SRC))
+OBJ_FILES =		$(addprefix $(OBJ_DIR), $(OBJ_O))
 
-LFT_DIR =	libft/
-LFT_FILES =	libft.a
-LFTS =		$(addprefix $(LFT_DIR), $(LFT_FILES))
+LIBFT_DIR =		libft/
+LIBFT_A =		libft.a
+LIBFT_FILES =	$(addprefix $(LIBFT_DIR), $(LIBFT_A))
 
-HDR_DIR =	-I includes -I libft/includes
-HDR_FILES =	includes/ft_ssl_des.h includes/ft_des_num.h
-# HDR_FILES = includes/$(addsuffix .h, $(HDR))
+LIBFT_HDR_DIR =	libft/includes/
 
-C_FLAGS =	-Wall -Wextra -Werror -O3
+HDR_DIR =		includes/
+HDR_H =			$(addsuffix .h, $(HDR))
+HDR_FILES =		$(addprefix $(HDR_DIR), $(HDR_H))
+
+C_FLAGS =		-Wall -Wextra -Werror -O3
 
 RED =				[31m
 GREEN =				[32m
@@ -68,34 +70,32 @@ END_COLOUR =		\033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LFTS)
-	@echo "$(YELLOW)Compiling $(NAME)...$(END_COLOUR)"
+$(NAME): $(OBJ_FILES) $(LIBFT_FILES)
+	@echo "$(YELLOW_LIGHT)$(NAME): $(YELLOW)Compiling $(NAME)...$(END_COLOUR)"
 	@gcc $(C_FLAGS) $^ -o $@
-	@echo "$(GREEN)Successfully compiled $(NAME)!$(END_COLOUR)"
+	@echo "$(YELLOW_LIGHT)$(NAME): $(GREEN)Successfully compiled $(NAME)!$(END_COLOUR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HDR_FILES)
 	@mkdir -p obj
-	@gcc $(C_FLAGS) $(HDR_DIR) -c $< -o $@
+	@gcc $(C_FLAGS) -I $(HDR_DIR) -I $(LIBFT_HDR_DIR) -c $< -o $@
 
-$(LFTS): force
-	@make -C $(LFT_DIR)
+$(LIBFT_FILES): force
+	@make -C $(LIBFT_DIR)
 
 force:
 	@true
 
 clean:
-	@echo "$(YELLOW)Cleaning objects...$(END_COLOUR)"
+	@echo "$(YELLOW_LIGHT)$(NAME): $(YELLOW)Cleaning objects...$(END_COLOUR)"
 	@/bin/rm -rf $(OBJ_DIR)
-	@echo "$(YELLOW)Cleaning library objects...$(END_COLOUR)"
-	@make clean -C $(LFT_DIR)
-	@echo "$(GREEN)Successfully cleaned all objects!$(END_COLOUR)"
+	@make clean -C $(LIBFT_DIR)
+	@echo "$(YELLOW_LIGHT)$(NAME): $(GREEN)Successfully cleaned all objects!$(END_COLOUR)"
 
 fclean: clean
-	@echo "$(YELLOW)Cleaning executable...$(END_COLOUR)"
+	@echo "$(YELLOW_LIGHT)$(NAME): $(YELLOW)Cleaning executable...$(END_COLOUR)"
 	@/bin/rm -f $(NAME)
-	@echo "$(YELLOW)Cleaning libraries...$(END_COLOUR)"
-	@make fclean -C $(LFT_DIR)
-	@echo "$(GREEN)Successfully cleaned everything!$(END_COLOUR)"
+	@make fclean -C $(LIBFT_DIR)
+	@echo "$(YELLOW_LIGHT)$(NAME): $(GREEN)Successfully cleaned everything!$(END_COLOUR)"
 
 re:	fclean all
 

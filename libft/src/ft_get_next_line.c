@@ -10,6 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** Niche reading function that reads from a file descriptor until a newline is
+** reached. A buffer is allocated for this line, and a pointer given as the
+** "line" argument is set to this buffer. Information on bytes read are stored
+** in static char arrays, so subsequent calls will return the "next" line.
+*/
+
 #include "libft.h"
 
 static int	move_line(char **theo, char **line, int fd, int ret)

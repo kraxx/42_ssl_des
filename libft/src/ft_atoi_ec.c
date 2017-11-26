@@ -10,6 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** atoi error checker. Returns 1 or -1 on numbers larger/smaller than the limits
+*/
+
 #include "libft.h"
 
 int			ft_atoi_ec(const char *nptr)
