@@ -18,7 +18,7 @@ uint64_t	des_block_permutations(uint64_t k[16], uint64_t buf)
 	t_64bits	rl;
 	t_64bits	right;
 	uint32_t	left;
-	short		i;
+	int8_t		i;
 
 	ret.ll = permutate(buf, g_ip, 64, MASK_64);
 	left = ret.i[1];
@@ -43,9 +43,9 @@ void		des_de_base64(t_data *data)
 {
 	char	*ret;
 	char	*buf;
-	int		i;
-	int		len;
-	int		remainder;
+	size_t	i;
+	size_t	len;
+	int8_t	remainder;
 
 	len = data->len;
 	ret = ft_strnew(((data->len / 4) * 3) + ((data->len % 4) ? 3 : 0));
@@ -76,7 +76,7 @@ static void	des_en_base64_remainder(char *input, char **ret,
 
 	buf = en_base64(input, len, data);
 	tmp = ft_strjoin(*ret, buf);
-	free(ret);
+	free(*ret);
 	free(buf);
 	*ret = tmp;
 }

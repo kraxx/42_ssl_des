@@ -14,7 +14,7 @@
 
 static void	write_usage(void)
 {
-	int	i;
+	uint8_t	i;
 
 	i = 0;
 	ft_putendl("usage: ./ft_ssl "CYANTXT"[command] "GRNTXT"[opts] "
@@ -45,7 +45,7 @@ void		write_exit(int n)
 	msg[10] = "error: data not multiple of block length (8)";
 	msg[11] = "error: missing input for key or initial vector";
 	msg[12] = "error: hex string is too long";
-	if (n)
+	if (n > 0)
 		ft_putendl(msg[n]);
 	write_usage();
 	exit(EXIT_FAILURE);

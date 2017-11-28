@@ -12,9 +12,9 @@
 
 #include "ft_ssl_des.h"
 
-static void	generate_subkeys_en(uint32_t c[], uint32_t d[])
+static void	generate_subkeys_en(uint32_t c[17], uint32_t d[17])
 {
-	int	i;
+	int8_t	i;
 
 	i = -1;
 	while (++i < 16)
@@ -26,9 +26,9 @@ static void	generate_subkeys_en(uint32_t c[], uint32_t d[])
 	}
 }
 
-static void	generate_subkeys_de(uint32_t c[], uint32_t d[])
+static void	generate_subkeys_de(uint32_t c[17], uint32_t d[17])
 {
-	int	i;
+	int8_t	i;
 
 	c[1] = c[0];
 	d[1] = d[0];
@@ -42,10 +42,10 @@ static void	generate_subkeys_de(uint32_t c[], uint32_t d[])
 	}
 }
 
-static void	generate_16keys(uint32_t c[], uint32_t d[], uint64_t k[])
+static void	generate_16keys(uint32_t c[17], uint32_t d[17], uint64_t k[16])
 {
 	uint64_t	cd;
-	int			i;
+	int8_t		i;
 
 	i = -1;
 	while (++i < 16)
@@ -60,7 +60,7 @@ void		generate_des3_keys(uint64_t k[3][16], t_data *data)
 	uint32_t	c[17];
 	uint32_t	d[17];
 	uint64_t	key;
-	int			i;
+	int8_t		i;
 
 	i = -1;
 	while (++i < 3)

@@ -29,7 +29,7 @@ SRC = 		main \
 			des3_cbc
 
 HDR =		ft_ssl_des \
-			ft_des_num
+			ft_des_num 
 
 SRC_DIR =		src/
 SRC_C =			$(addsuffix .c, $(SRC))
@@ -49,21 +49,22 @@ HDR_DIR =		includes/
 HDR_H =			$(addsuffix .h, $(HDR))
 HDR_FILES =		$(addprefix $(HDR_DIR), $(HDR_H))
 
-C_FLAGS =		-Wall -Wextra -Werror -O3
+C_FLAGS =		-Wall -Wextra -Werror
+OPT_FLAGS = 	-O3
 
-RED =				[31m
-GREEN =				[32m
-BLUE =				[34m
-YELLOW =			[33m
-MAGENTA =			[35m
-GREY =				[37m
-GREEN_LIGHT =		[92m
-YELLOW_LIGHT =		[93m
-YELLOW_BOLD =		[1;33m
-YELLOW_LIGHT_BOLD =	[1;93m
-MAGENTA_LIGHT =		[95m
-BLINK =				[5m
-GREEN_LIGHT_BLINK =	[5;92m
+RED =				\033[31m
+GREEN =				\033[32m
+BLUE =				\033[34m
+YELLOW =			\033[33m
+MAGENTA =			\033[35m
+GREY =				\033[37m
+GREEN_LIGHT =		\033[92m
+YELLOW_LIGHT =		\033[93m
+YELLOW_BOLD =		\033[1;33m
+YELLOW_LIGHT_BOLD =	\033[1;93m
+MAGENTA_LIGHT =		\033[95m
+BLINK =				\033[5m
+GREEN_LIGHT_BLINK =	\033[5;92m
 END_COLOUR =		\033[0m
 
 .SILENT:
@@ -72,7 +73,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT_FILES)
 	@echo "$(YELLOW_LIGHT)$(NAME): $(YELLOW)Compiling $(NAME)...$(END_COLOUR)"
-	@gcc $(C_FLAGS) $^ -o $@
+	@gcc $(C_FLAGS) $(OPT_FLAGS) $^ -o $@
 	@echo "$(YELLOW_LIGHT)$(NAME): $(GREEN)Successfully compiled $(NAME)!$(END_COLOUR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HDR_FILES)

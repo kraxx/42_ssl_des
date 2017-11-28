@@ -34,8 +34,8 @@ uint64_t	des_string_to_buffer(size_t len, int i, t_data *data)
 
 void		des_remove_padding(char *output, t_data *data)
 {
-	char	n;
-	char	i;
+	uint8_t	n;
+	int8_t	i;
 
 	n = output[data->len - 1];
 	i = -1;

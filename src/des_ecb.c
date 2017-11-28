@@ -85,10 +85,10 @@ static void	parse_args_des_ecb(int ac, char **av, t_data *data)
 }
 
 static void	des_ecb_encrypt_64bits(uint64_t k[16], char *new_string,
-									int len, t_data *data)
+									size_t len, t_data *data)
 {
 	uint64_t	buf;
-	int			i;
+	size_t		i;
 
 	i = 0;
 	while (i <= len)

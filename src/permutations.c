@@ -12,10 +12,11 @@
 
 #include "ft_ssl_des.h"
 
-uint64_t	permutate(uint64_t block, const t_uc tab[], int size, uint64_t mask)
+uint64_t	permutate(uint64_t block, const t_uc tab[],
+						uint8_t size, uint64_t mask)
 {
 	uint64_t	ret;
-	int			i;
+	uint8_t		i;
 
 	ret = 0;
 	i = 0;
@@ -34,8 +35,8 @@ uint64_t	permutate_e(uint64_t r_block)
 {
 	uint64_t	ret;
 	uint64_t	mask;
-	int			i;
-	int			j;
+	uint8_t		i;
+	uint8_t		j;
 
 	mask = MASK_64;
 	i = 0;
@@ -57,7 +58,7 @@ uint32_t	permutate_sbox(uint64_t e_block)
 	uint32_t	row;
 	uint32_t	col;
 	uint32_t	ret;
-	int			i;
+	int8_t		i;
 
 	ret = 0;
 	i = -1;

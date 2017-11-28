@@ -26,7 +26,7 @@
 
 static int	parse_command(char *cmd)
 {
-	short	i;
+	int8_t	i;
 
 	i = -1;
 	while (++i < CMD_COUNT)
@@ -39,7 +39,7 @@ static int	parse_command(char *cmd)
 int			main(int ac, char **av)
 {
 	t_data	data;
-	short	cmd_index;
+	uint8_t	cmd_index;
 
 	if (ac < 2)
 		write_exit(0);

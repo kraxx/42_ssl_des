@@ -19,7 +19,7 @@ static void	des3_cbc_encrypt_64bits(uint64_t k[3][16], char *new_string,
 	uint64_t	buf_prev;
 	uint64_t	vector;
 	size_t		i;
-	short		j;
+	int8_t		j;
 
 	vector = ft_atoull_base(data->init_vector, 16);
 	endian_switch64(&vector);

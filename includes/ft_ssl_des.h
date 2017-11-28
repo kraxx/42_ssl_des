@@ -99,15 +99,14 @@ void			des_cbc_xor_vector_de(uint64_t *buf, uint64_t *buf_prev,
 				uint64_t *vector, t_data *data);
 
 void			des_remove_padding(char *output, t_data *data);
-uint64_t		des_block_permutations(uint64_t k[], uint64_t buf);
+uint64_t		des_block_permutations(uint64_t k[16], uint64_t buf);
 uint64_t		des_string_to_buffer(size_t len, int i, t_data *data);
 
 uint32_t		permutate_sbox(uint64_t e_block);
 uint64_t		permutate_e(uint64_t r_block);
 uint64_t		permutate(uint64_t block, const t_uc table[],
-						int size, uint64_t mask);
+							uint8_t size, uint64_t mask);
 
-void			write_exit(int n);
 void			endian_switch32(uint32_t *n);
 void			endian_switch64(uint64_t *n);
 char			*string_truncate(char *str, int bytes);
@@ -118,12 +117,13 @@ void			get_input_from_stdin(t_data *data);
 void			get_key_from_stdin(t_data *data);
 void			get_vector_from_stdin(t_data *data);
 void			write_output(char *output, t_data *data);
+void			write_exit(int n);
 
-static char		*g_commands[] = {
+static const char	*g_commands[CMD_COUNT] = {
 	CMD_CIPHER
 };
 
-static void		(*g_cmd_fp[CMD_COUNT])(int, char**, t_data*) = {
+static void			(*g_cmd_fp[CMD_COUNT])(int, char**, t_data*) = {
 	FP_CIPHER
 };
 

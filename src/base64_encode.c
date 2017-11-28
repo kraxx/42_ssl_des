@@ -27,7 +27,7 @@ static void		de_base64_decode(char *input, char *ret,
 								size_t len, t_data *data)
 {
 	t_32bits	n;
-	int			i;
+	int8_t		i;
 
 	while (len > 0)
 	{

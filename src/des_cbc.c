@@ -72,12 +72,12 @@ void		parse_args_des_cbc(int ac, char **av, t_data *data)
 }
 
 static void	des_cbc_encrypt_64bits(uint64_t k[16], char *new_string,
-									int len, t_data *data)
+									size_t len, t_data *data)
 {
 	uint64_t	buf;
 	uint64_t	buf_prev;
 	uint64_t	vector;
-	int			i;
+	size_t		i;
 
 	vector = ft_atoull_base(data->init_vector, 16);
 	endian_switch64(&vector);
