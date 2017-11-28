@@ -185,52 +185,52 @@ echo $'\ndes-cbc base64'
 echo $1 | $TEST_TWO des-cbc -k $KEY -v $IV -a | $TEST_TWO des-cbc -k $KEY -v $IV -d -a | $TEST_TWO des-cbc -k $KEY -v $IV -a | $TEST_TWO des-cbc -k $KEY -v $IV -d -a
 
 
-echo -e "\n\n${MAGENTATXT}BIGFILE tests:${ENDTXT}"
+# echo -e "\n\n${MAGENTATXT}BIGFILE tests:${ENDTXT}"
 
-echo "Diffing base64 for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-base64 -i $BIG_FILE_PATH -o $BIG_FILE_SYS_ENC
-$TEST_TWO base64 -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC
-dcheck "$BIG_FILE_DIFF_ENC" "silent"
+# echo "Diffing base64 for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# base64 -i $BIG_FILE_PATH -o $BIG_FILE_SYS_ENC
+# $TEST_TWO base64 -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC
+# dcheck "$BIG_FILE_DIFF_ENC" "silent"
 
-echo "Diffing base64 for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-base64 -i $BIG_FILE_SYS_ENC -o $BIG_FILE_SYS_DEC -D
-$TEST_TWO base64 -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_ENC -d
-dcheck "$BIG_FILE_DIFF_DEC" "silent"
+# echo "Diffing base64 for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# base64 -i $BIG_FILE_SYS_ENC -o $BIG_FILE_SYS_DEC -D
+# $TEST_TWO base64 -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_ENC -d
+# dcheck "$BIG_FILE_DIFF_DEC" "silent"
 
-echo -n "" > $BIG_FILE_SYS_ENC > $BIG_FILE_SYS_DEC > $BIG_FILE_MY_ENC > $BIG_FILE_MY_DEC
+# echo -n "" > $BIG_FILE_SYS_ENC > $BIG_FILE_SYS_DEC > $BIG_FILE_MY_ENC > $BIG_FILE_MY_DEC
 
-echo "Diffing des-ecb encryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-openssl des-ecb -K $KEY -in $BIG_FILE_PATH -out $BIG_FILE_SYS_ENC
-$TEST_TWO des-ecb -k $KEY -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC
-dcheck "$BIG_FILE_DIFF_ENC" "silent"
+# echo "Diffing des-ecb encryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# openssl des-ecb -K $KEY -in $BIG_FILE_PATH -out $BIG_FILE_SYS_ENC
+# $TEST_TWO des-ecb -k $KEY -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC
+# dcheck "$BIG_FILE_DIFF_ENC" "silent"
 
-echo "Diffing des-ecb decryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-openssl des-ecb -K $KEY -in $BIG_FILE_SYS_ENC -out $BIG_FILE_SYS_DEC -d
-$TEST_TWO des-ecb -k $KEY -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_DEC -d
-dcheck "$BIG_FILE_DIFF_DEC" "silent"
+# echo "Diffing des-ecb decryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# openssl des-ecb -K $KEY -in $BIG_FILE_SYS_ENC -out $BIG_FILE_SYS_DEC -d
+# $TEST_TWO des-ecb -k $KEY -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_DEC -d
+# dcheck "$BIG_FILE_DIFF_DEC" "silent"
 
-echo -n "" > $BIG_FILE_SYS_ENC > $BIG_FILE_SYS_DEC > $BIG_FILE_MY_ENC > $BIG_FILE_MY_DEC
+# echo -n "" > $BIG_FILE_SYS_ENC > $BIG_FILE_SYS_DEC > $BIG_FILE_MY_ENC > $BIG_FILE_MY_DEC
 
-echo "Diffing des-cbc encryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-openssl des-cbc -K $KEY -iv $IV -in $BIG_FILE_PATH -out $BIG_FILE_SYS_ENC
-$TEST_TWO des-cbc -k $KEY -v $IV -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC
-dcheck "$BIG_FILE_DIFF_ENC" "silent"
+# echo "Diffing des-cbc encryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# openssl des-cbc -K $KEY -iv $IV -in $BIG_FILE_PATH -out $BIG_FILE_SYS_ENC
+# $TEST_TWO des-cbc -k $KEY -v $IV -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC
+# dcheck "$BIG_FILE_DIFF_ENC" "silent"
 
-echo "Diffing des-cbc decryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-openssl des-cbc -k $KEY -iv $IV -in $BIG_FILE_SYS_ENC -out $BIG_FILE_SYS_DEC -d
-$TEST_TWO des-cbc -k $KEY -v $IV -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_DEC -d
-dcheck "$BIG_FILE_DIFF_DEC" "silent"
+# echo "Diffing des-cbc decryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# openssl des-cbc -k $KEY -iv $IV -in $BIG_FILE_SYS_ENC -out $BIG_FILE_SYS_DEC -d
+# $TEST_TWO des-cbc -k $KEY -v $IV -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_DEC -d
+# dcheck "$BIG_FILE_DIFF_DEC" "silent"
 
-echo -n "" > $BIG_FILE_SYS_ENC > $BIG_FILE_SYS_DEC > $BIG_FILE_MY_ENC > $BIG_FILE_MY_DEC
+# echo -n "" > $BIG_FILE_SYS_ENC > $BIG_FILE_SYS_DEC > $BIG_FILE_MY_ENC > $BIG_FILE_MY_DEC
 
-echo "Diffing des3 encryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-openssl des3 -K $KEY -iv $IV -in $BIG_FILE_PATH -out $BIG_FILE_SYS_ENC -d
-$TEST_TWO des3 -k $KEY -v $IV -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC -d
-dcheck "$BIG_FILE_DIFF_ENC" "silent"
+# echo "Diffing des3 encryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# openssl des3 -K $KEY -iv $IV -in $BIG_FILE_PATH -out $BIG_FILE_SYS_ENC -d
+# $TEST_TWO des3 -k $KEY -v $IV -i $BIG_FILE_PATH -o $BIG_FILE_MY_ENC -d
+# dcheck "$BIG_FILE_DIFF_ENC" "silent"
 
-echo "Diffing des3 decryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
-openssl des3 -k $KEY -iv $IV -in $BIG_FILE_SYS_ENC -out $BIG_FILE_SYS_DEC -d
-$TEST_TWO des3 -k $KEY -v $IV -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_DEC -d
-dcheck "$BIG_FILE_DIFF_DEC" "silent"
+# echo "Diffing des3 decryption for ${MAGENTATXT}BIGFILE:${ENDTXT}"
+# openssl des3 -k $KEY -iv $IV -in $BIG_FILE_SYS_ENC -out $BIG_FILE_SYS_DEC -d
+# $TEST_TWO des3 -k $KEY -v $IV -i $BIG_FILE_SYS_ENC -o $BIG_FILE_MY_DEC -d
+# dcheck "$BIG_FILE_DIFF_DEC" "silent"
 
-rm $BIG_FILE_SYS_ENC $BIG_FILE_SYS_DEC $BIG_FILE_MY_ENC $BIG_FILE_MY_DEC
+# rm $BIG_FILE_SYS_ENC $BIG_FILE_SYS_DEC $BIG_FILE_MY_ENC $BIG_FILE_MY_DEC
