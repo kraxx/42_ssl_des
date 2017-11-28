@@ -36,19 +36,19 @@ BIG_FILE_DIFF_DEC="diff $BIG_FILE_SYS_DEC $BIG_FILE_MY_DEC"
 # $1 = input msg
 # $2 = key
 # $3 = initial vector
-if [ -z $1 ];
+if [ -z "$1" ]
 	then
 		echo "${REDTXT}Please supply a message as argument${ENDTXT}"
 		echo "${REDTXT}./differ.sh [msg] [key (opt)] [iv (opt)]${ENDTXT}"
 		exit 1
 fi
-if [ -z $2 ];
+if [ -z $2 ]
 	then
 		KEY="0123456789FEDCBA"
 	else
 		KEY=$2
 fi
-if [ -z $3 ];
+if [ -z $3 ]
 	then
 		IV="69FEFE45123ABC69"
 	else
@@ -56,13 +56,13 @@ if [ -z $3 ];
 fi
 
 dcheck() {
-	if [ "$2" == "silent" ];
+	if [ "$2" == "silent" ]
 		then
 			$1 >/dev/null
 		else
 			$1
 	fi
-	if [ $? -eq 0 ];
+	if [ $? -eq 0 ]
 		then
 			echo "${GREENTXT}Good job :)${ENDTXT}"
 		else
@@ -175,12 +175,12 @@ echo $1 | base64 | $TEST_TWO base64 -d | $TEST_TWO base64 | base64 -D
 echo $'\ndes-ecb'
 echo $1 | $TEST_TWO des-ecb -k $KEY | $TEST_TWO des-ecb -k $KEY -d | $TEST_TWO des-ecb -k $KEY | $TEST_TWO des-ecb -k $KEY -d
 
-echo -n "" > $SYS_ENC $SYS_DEC $MY_ENC $MY_DEC
 echo $'\ndes-ecb base64'
 echo $1 | $TEST_TWO des-ecb -k $KEY -a | $TEST_TWO des-ecb -k $KEY -d -a | $TEST_TWO des-ecb -k $KEY -a | $TEST_TWO des-ecb -k $KEY -d -a
 
 echo $'\ndes-cbc'
 echo $1 | $TEST_TWO des-cbc -k $KEY -v $IV | $TEST_TWO des-cbc -k $KEY -v $IV -d | $TEST_TWO des-cbc -k $KEY -v $IV | $TEST_TWO des-cbc -k $KEY -v $IV -d
+
 echo $'\ndes-cbc base64'
 echo $1 | $TEST_TWO des-cbc -k $KEY -v $IV -a | $TEST_TWO des-cbc -k $KEY -v $IV -d -a | $TEST_TWO des-cbc -k $KEY -v $IV -a | $TEST_TWO des-cbc -k $KEY -v $IV -d -a
 
