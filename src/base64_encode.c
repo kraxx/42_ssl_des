@@ -46,7 +46,7 @@ static void		de_base64_decode(char *input, char *ret,
 		n.i = fourbytes_to_three(n.i);
 		endian_switch32(&n.i);
 		ft_memcpy(ret, &n.i, 3);
-		len -= 4;
+		len = len > 3 ? len - 4 : 0;
 		ret += 3;
 		--data->len;
 	}
